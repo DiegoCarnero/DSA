@@ -3,7 +3,16 @@ In how many ways can we solve the sum of the coins
 Time Complexity: m^n
 '''
 from collections import defaultdict
-
+'''
+for coin change 2 problem
+dp=[0]*(amount+1)
+        dp[0] = 1
+        for coin in coins:
+            for i in range(1, amount+1):
+                if i - coin >=0:
+                    dp[i] += dp[i-coin]
+        return dp[-1]
+'''
 def how_many_ways(m, coins):
     memo = defaultdict(lambda: 0)
     memo[0] = 1
