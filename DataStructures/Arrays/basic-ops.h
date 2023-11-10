@@ -1,0 +1,16 @@
+extern int PrintArray(int arr[], int size);
+extern void RemoveDuplicates(int arr[], int size);
+extern int cmpfunc (const void *a, const void *b);
+extern void SortArray(int arr[], int length);
+extern void Rotate_simple(int arr[], int size, int rotate_by);
+extern int IndexOf(int arr[], int value, int size);
+extern int Insert(int arr[], int capacity, int length, int new, int pos);
+extern int DeleteAt(int arr[], int length, int pos);
+extern int DeleteFirstInstance(int arr[], int length, int key);
+extern void Reverse(int arr[], int start, int end);
+extern int RemoveDuplicates(int arr[], int size);
+extern int DeleteAllOf(int arr[], int length, int key);
+extern void PrintSlice(int arr[], int start, int end);
+extern int FindMax(int arr[], int size);
+extern int FindMin(int arr[], int size);
+extern void swap(int* a, int* b);

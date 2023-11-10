@@ -6,6 +6,8 @@
     #define ARRAY_SIZE(x) (sizeof((x)) / sizeof((x)[0]))
 #endif
 
+void PrintArray(int arr[], int size);
+
 int cmpfunc (const void *a, const void *b)
 {
     return (*(int*)a - *(int*)b);
@@ -16,6 +18,40 @@ void SortArray(int arr[], int length)
     qsort(arr, length, sizeof(int), cmpfunc);
 }
 
+int DeleteAt(int arr[], int size, int pos)
+{
+    int i;
+    for (i = pos; i < size - 1; i++)  
+    {  
+        arr[i] = arr [i + 1];  
+    }  
+    return size-1;
+}
+
+void swap(int* a, int* b) {  
+    int t = *a;  
+    *a = *b;  
+    *b = t;  
+}  
+
+int RemoveDuplicates(int arr[], int size)
+{
+    int i, j;
+
+    for (i = 0; i < size; i ++)  
+    {  
+        for ( j = i + 1; j < size; j++)  
+        {
+            if (arr[i] == arr[j])  
+            { 
+                size = DeleteAt(arr, size, j);
+                j--;    // if we rearranged the elments, dont increase j
+            }
+        }  
+    }
+
+    return size;
+}
 
 // Time Complexity: O(N * d)
 // Auxiliary Space: O(1)
@@ -58,10 +94,28 @@ int Insert(int arr[], int capacity, int length, int new, int pos)
     return length + 1;
 }
 
-int Delete(int arr[], int length, int key)
+int DeleteAllOf(int arr[], int length, int key)
+{
+    // int act, prev;
+    int i, j, hits = 0;
+    for (i = 0; i < length; i++)
+    {
+        if (arr[i] == key){
+            for (j = i; j < (length - 1) ;j++)
+            {
+                arr[j] = arr[j+1];
+            }
+            hits++;
+        }
+    }
+ 
+    return length - hits;
+}
+
+int DeleteFirstInstance(int arr[], int length, int key)
 {
     int pos = IndexOf(arr, key, length);
- 
+
     if (pos == -1) {
         printf("Element not found");
         return length;
@@ -99,8 +153,49 @@ void PrintArray(int arr[], int size)
   
   printf("\n"); 
 }  
-  
 
+void PrintSlice(int arr[], int start, int end) 
+{
+  int i; 
+  for (i=start; i < end; i++) 
+    printf("%d ", arr[i]); 
+  
+  printf("\n"); 
+}
+
+int FindMax(int arr[], int size)
+{
+    int pos = 0, max = arr[0];
+
+    for(int i = 1; i < size; i++){
+        if (max < arr[i])
+        {
+            max = arr[i];
+            pos = i;
+        }
+    }
+
+    return pos;
+}
+
+int FindMin(int arr[], int size)
+{
+    int pos = 0, min = arr[0];
+
+    for(int i = 1; i < size; i++){
+        printf("min %d arr %d i %d\n", min, arr[i], i);
+        if (min > arr[i])
+        {
+            min = arr[i];
+            pos = i;
+            printf("min %d pos %d\n", min, pos);
+        }
+    }
+
+    return pos;
+}
+
+/*
 int main()  
 { 
     // int arr[] = {2, 3, 4, 5, 6, 7}; 
@@ -112,8 +207,8 @@ int main()
     // printf("Index of \"%d\": %d\n", 3, IndexOf(arr, 3, n));
     // Rotate_simple(arr, n, 2);
     // PrintArray(arr, n);
-    int arr[10] = {7, 3, 4, 2, 6, 1};
-    int length = 6;
+    int arr[] = {7, 2, 3, 4, 2, 6, 2, 1, 2};
+    int length = ARRAY_SIZE(arr);
     // int size = sizeof(arr) / sizeof(arr[0]);
     // printf("%d\n", length);
     // PrintArray(arr, length);
@@ -121,8 +216,11 @@ int main()
     // PrintArray(arr, length);
     // length = DeleteElement(arr, length, 2);
     // PrintArray(arr, length);
-    SortArray(arr, length);
+    // SortArray(arr, length);
+    // length = DeleteAllOf(arr, length, 2);
+    length = RemoveDuplicates(arr, length);
     PrintArray(arr, length);
 
     return 0; 
-} 
+}
+*/
