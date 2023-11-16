@@ -130,7 +130,6 @@ void DeleteNth(struct Node** start, int pos){
 		*start = (*start)->next;
 		free(temp);
 	} else {
-		printf("prev: %d ptrNode: %d\n", prev->data, ptrNode->data);
 		prev->next = ptrNode->next;
 		free(ptrNode);
 	}
