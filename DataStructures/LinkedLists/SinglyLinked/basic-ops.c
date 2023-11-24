@@ -42,6 +42,19 @@ void InsertAtBeginning_3(struct Node** ptrHead, int data){
 	*ptrHead = temp;
 }
 
+void deleteNode(struct Node* node)
+{
+    struct Node* temp;
+    if (node == NULL)
+        return;
+    else {
+        temp = node->next;
+        node->data = temp->data;
+        node->next = temp->next;
+        free(temp);
+    }
+}
+ 
 void CreateAfter(struct Node* ptrNode, int data){
 
 	struct Node* new_node = malloc(sizeof(struct Node));
