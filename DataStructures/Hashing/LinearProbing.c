@@ -1,113 +1,124 @@
 #include <stdio.h>
 #include <stdlib.h>
- 
-struct Node {
+#include <stdbool.h>
+#include <string.h>
+
+typedef struct node {
     int key;
     int value;
-};
- 
-const int capacity = 20;
-int size = 0;
-struct Node* find(struct Node** arr, int key);
+    bool used;
+} Node;
 
-int HashCode(int key){
-    return key % capacity;
+typedef struct hashtable {
+    int max;
+    int length;
+    Node* table;
+} HashTable;
+
+void initTable(HashTable *ht, int capacity){
+
+    ht->max = capacity;
+    ht->length = 0;
+    ht->table = (Node*) calloc(ht->max, sizeof(Node));
+}
+ 
+int hashcode(int key, int max) {
+    return (key % max);
 }
 
-void Insert(struct Node** arr, int key, int V) {
-
-    struct Node* temp = (struct Node*) malloc(sizeof(struct Node));
-    temp->key = key;
-    temp->value = V;
-
-    int hashIndex = HashCode(key);
-
-    while (arr[hashIndex] != NULL && arr[hashIndex]->key != key && arr[hashIndex]->key != -1) {
-        hashIndex++;
-        hashIndex %= capacity;
+int index_incr_wrap(int index, int table_size){
+    index++;
+    if (index >= table_size){
+        index = 0;
     }
-
-    if (arr[hashIndex] == NULL || arr[hashIndex]->key == -1) {
-        size++;
-    }
- 
-    arr[hashIndex] = temp;
+    return index;
 }
 
-int Delete(struct Node** arr, int key) {
-    struct Node* found = find(arr, key);
-    int hashIndex = HashCode(key);
-    if(found != NULL){
-        while (arr[hashIndex] != NULL && arr[hashIndex]->key != key && arr[hashIndex]->key != -1) {
-            hashIndex++;
-            hashIndex %= capacity;
+bool insert(HashTable *ht, Node** node) {
+
+    int index = hashcode((*node)->key, ht->max);
+    int first_key = ht->table[index].key;
+    while(ht->table[index].used){
+        index = index_incr_wrap(index, ht->max);
+        if(ht->table[index].key == first_key){
+            printf("Full\n");
+            return 0;
         }
-        arr[hashIndex] = NULL;
-        free(found);
-        size--;
-        return 1;
+    }
+    ht->table[index].key = (*node)->key;
+    ht->table[index].value = (*node)->value;
+    ht->table[index].used = true;
+    (*node) = &ht->table[index];
+    ht->length += 1;
+    return 1;
+}
+
+Node* search(HashTable *ht, int key){
+    int index = hashcode(key, ht->max);
+    int first_key = ht->table[index].key;
+    while(ht->table[index].used){
+        if(ht->table[index].key == key){
+            ht->table[index].key = 0;
+            ht->table[index].value = 0;
+            ht->table[index].used = 0;
+            return 1;
+        } else if(ht->table[index].key == first_key){
+            printf("Full\n");
+            return 0;
+        }
+        index = index_incr_wrap(index, ht->max);
+    }
+}
+
+bool delete(HashTable *ht, int key){
+    int index = hashcode(key, ht->max);
+    int first_key = ht->table[index].key;
+    while(ht->table[index].used){
+        if(ht->table[index].key == key){
+            return &ht->table[index];
+        } else if(ht->table[index].key == first_key){
+            printf("Full\n");
+            return NULL;
+        }
+        index = index_incr_wrap(index, ht->max);
+    }
+}
+
+void printNode(HashTable *ht, int key){
+
+    Node* node = search(ht, key);
+
+    if(node != NULL){
+        printf("key: %d val: %d\n", node->key, node->value);
     } else {
-        return 0;
-    }
-}
-
-struct Node* find(struct Node** arr, int key) {
-    int hashIndex = HashCode(key);
-    int counter = 0;
-
-    while (arr[hashIndex] != NULL) {
-        counter = 0;
-        if (counter++ > capacity)
-            break;
-
-        if (arr[hashIndex]->key == key){
-            return arr[hashIndex];
-        }
-        hashIndex = HashCode(hashIndex + 1);
-    }
-
-    return NULL;
-}
-
-void PrintHashTable(struct Node** arr){
-    int i;
-    struct Node* curr = *arr;
-    for (i = 0; i < capacity; i++) {
-        curr = arr[i];
-        if (curr != NULL) {
-            printf("address: %p Key: %d Value: %d\n", (void *) curr, curr->key, curr->value);
-        }
-    }
-    if (curr == NULL && i == 0) {
-        printf("\n Array empty\n");
+        printf("Not found\n");
     }
 }
 
 int main() {
-    struct Node** arr = (struct Node**) malloc(capacity * sizeof(struct Node*));
-    for (int i = 0; i < capacity; i++) {
-        arr[i] = NULL;
-    }
 
-    Insert(arr, 4, 7);
-    Insert(arr, 0, 1);
-    Insert(arr, 1, 5);
-    Insert(arr, 2, 15);
-    Insert(arr, 3, 20);
-    Insert(arr, 40, 70);
-    Insert(arr, 5, 0);
+    HashTable* ht = (HashTable *)malloc(sizeof(HashTable));
+    initTable(ht, 3);
+    Node* n = (Node *)malloc(sizeof(Node));
+    n->key = 11;
+    n->value = 69;
+    insert(ht, &n);
 
-    PrintHashTable(arr);
+    Node* n2 = (Node *)malloc(sizeof(Node));
+    n2->key = 23;
+    n2->value = 13;
+    insert(ht, &n2);
 
-    struct Node* temp = find(arr, 4);
-    printf("\nKey %d: Value: %d, address: %p", 4, temp->value, (void *) temp);
-    temp = find(arr, 0);
-    printf("\nKey %d: Value: %d, address: %p", 0, temp->value, (void *) temp);
-    temp = find(arr, 40);
-    printf("\nKey %d: Value: %d, address: %p", 40, temp->value, (void *) temp);
-    printf("\n\nDeleting key 40\n");
-    Delete(arr, 40);
-    printf("\n");
+    Node* n3 = (Node *)malloc(sizeof(Node));
+    n3->key = 221;
+    n3->value = 79;
+    insert(ht, &n3);
+    Node* n4 = (Node *)malloc(sizeof(Node));
+    n4->key = 30;
+    n4->value = 99;
+    insert(ht, &n4);
 
-    PrintHashTable(arr);
+    delete(ht, 11);
+
+    printNode(ht, 11);
 }

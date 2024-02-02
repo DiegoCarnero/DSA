@@ -86,3 +86,7 @@ Estructuras de datos se usan para procesan, recuperar y almacenar datos, no solo
     Añadir edge|O(1)|O(1)
     Eliminar edge|O(1)|O(N)
     Inicialización|O(N*N)|O(N)
+
+### Recursos
+- [Optimizing Binary Search](https://youtu.be/1RIPMQQRBW)
+- [Perfect Hash Table](https://youtu.be/DMQ_HcNSOAI)

@@ -82,3 +82,26 @@ Para el tercer item...
 1|0|10|10|10|10|10|10
 2|0|10|15|25|25|25|25
 3|0|10|15|40|50|55|65
+
+## Memoization en Fibonacci
+`
+fib(n) = fib(n-1)+fib(n-2)
+`
+```
+         n
+       /   \
+    n-1     (n-2)
+    /  \         / \
+ (n-2) [n-3] [n-3]  n-4
+```
+## LRU Cache
+[LRU Cach implementation](https://www.geeksforgeeks.org/lru-cache-implementation/)
+
+Python:
+```
+from functools import lru_cache
+
+@lru_ache
+def func:
+   pass
+```
