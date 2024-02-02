@@ -116,7 +116,7 @@ int main() {
     Node* n4 = (Node *)malloc(sizeof(Node));
     n4->key = 30;
     n4->value = 99;
-    insert(ht, &n4);
+    insert(ht, &n4);    // full
 
     delete(ht, 11);
 
