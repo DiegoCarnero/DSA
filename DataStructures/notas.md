@@ -90,3 +90,4 @@ Estructuras de datos se usan para procesan, recuperar y almacenar datos, no solo
 ### Recursos
 - [Optimizing Binary Search](https://youtu.be/1RIPMQQRBW)
 - [Perfect Hash Table](https://youtu.be/DMQ_HcNSOAI)
+- ["Algorithms", Robert Sedgewick](https://www.youtube.com/playlist?list=PLMhLnbR_fjukCewhwIuT64dwSttMz9Y64)

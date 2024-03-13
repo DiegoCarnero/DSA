@@ -10,7 +10,7 @@ void gen_sums(int tree[], int start, int end){
         return;
     }
 
-    for(int i = start; i < end; i+=2){
+    for(int i = start; i + 1 < end; i+=2){
         if(i + 1 < end){
             sum = tree[i] + tree[i+1];
         } else{
@@ -25,10 +25,10 @@ void gen_sums(int tree[], int start, int end){
 void build(int tree[], int arr[], int size){
 
     for(int i=0; i < size; i++){
-        tree[i + size] = arr[i];
+        tree[i + (size - 1)] = arr[i];
     }
 
-    gen_sums(tree, size, 2 * size);
+    gen_sums(tree, size - 1, 2 * size);
     // for (int i = size - 1; i > 0; --i)
     //     tree[i] = tree[i<<1] + tree[i<<1|1];
 
@@ -85,15 +85,16 @@ int main(){
 
     // int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
     int arr[7] = {5,8,7,2,10,2,2};
+    // int arr[8] = {8, 6, 9, 1, 3, 4, 6, 8};
     int n = sizeof(arr)/sizeof(arr[0]); 
-    int tree[2 * n];
+    int tree[13];
 
     build(tree, arr, n);
 
-    Print(tree, 2 * n);
+    Print(tree, 2 * n - 1);
     printf("\n");
     update(tree, 2*n, 11, 11);
 
-    Print(tree, 2 * n);
+    Print(tree, 2 * n - 1);
 }
 
