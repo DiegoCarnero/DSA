@@ -91,3 +91,5 @@ Estructuras de datos se usan para procesan, recuperar y almacenar datos, no solo
 - [Optimizing Binary Search](https://youtu.be/1RIPMQQRBW)
 - [Perfect Hash Table](https://youtu.be/DMQ_HcNSOAI)
 - ["Algorithms", Robert Sedgewick](https://www.youtube.com/playlist?list=PLMhLnbR_fjukCewhwIuT64dwSttMz9Y64)
+- [Algorithmica - Algorithms for Modern Hardware](https://en.algorithmica.org/hpc/data-structures/)
+- [CS3 Data Structures & Algorithms](https://opendsa-server.cs.vt.edu/OpenDSA/Books/CS3/html/index.html)

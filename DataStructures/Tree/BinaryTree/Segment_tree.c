@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*
+Implicit Segment Tree, Eytzinger layout. La longitud del array inicial debe ser 2^n
+*/
+
 void gen_sums(int tree[], int start, int end){
 
     int sum;
@@ -83,11 +87,11 @@ void Print(int arr[], int size)
 
 int main(){
 
-    // int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
-    int arr[7] = {5,8,7,2,10,2,2};
+    int arr[16] = {13, -1, 2, 23, -4, 31, 13, 5, 2, -88, -52, 0, 4, 90, 3, -12};
+    // int arr[7] = {5,8,7,2,10,2,2};
     // int arr[8] = {8, 6, 9, 1, 3, 4, 6, 8};
     int n = sizeof(arr)/sizeof(arr[0]); 
-    int tree[13];
+    int tree[31];   // 2 * n - 1;
 
     build(tree, arr, n);
 
