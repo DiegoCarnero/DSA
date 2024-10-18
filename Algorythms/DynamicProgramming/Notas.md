@@ -1,8 +1,109 @@
+
+# Big O
+
+Cómo crece f(x) según x crece. Ej: si tenemos 4x² + 7x + 3 -> O(n²). Queremos saber el uso de tiempo y memoria.
+
+Comunes:
+
+||||
+|-|-|-|
+O(1)|contant|array lookup|
+|O(log n)|log time|binary search|
+|O(n)|linear|find in unsorted array (radix sort)|
+|O(n * log n)| quasilinear|comparison sort (merge sort)|
+|O(n²)|quadratic|bubble sort|
+
+![alt text](https://dabad.es/wp-content/uploads/2023/10/BigO-Comparacion.png)
+
+# Dynamic Programming
+
+1. La solución óptima es una combinación de las soluciones óptimas a los subproblemas.
+2. Los subproblemas deben ser deterministas y deben tener solape (resolver los mismos problemas una y otra vez).
+   
+   - Memoization: guardamos el retorno de la función para reutilizarlos cuando la llamamos con los mismos params.
+   - Tabulación;: misma idea, cachemaos resultados mediante (bottom up)
+   - Top-down vs Bottom-up: un gran problema hecho de problemas más pequeños que requieren ser solucionados primero **vs** empezamos resolviendo problemas pequeños para faciliar problemas más complejos. Por lo general esto equivale a **recursividad** vs **iterativo**.
+
+---
+### Requirements
+Dynamic Programming
+- Must have a recurrence relation
+   - Function must be pure: no side effects
+- Recurrence Relation < Recursive Execution
+### Time Complexity
+**(# Unique States) * (Cached Complexity)**
+- \# Unique States
+   - Size of recurrence relation
+   - Usually the product of parameter bounds
+- Cached Complexity
+   - What's the time complexity assuming recursive calls are O(1)?
+### DP = Decision Parameterization
+- Decisions are values to compute once 
+- Decisions are not tasks to run every time 
+- More Parameters -> Higher Runtime
+- Minimize the parameters needed for a decision 
+- Minimize the time to complete the decision
+
+Technique -> More Technique
+
+#### Main Ideas:
+   
+   Recurrence relation != Recursive execution
+
+   A recurrence relation is a mathematical construct. 
+   - It does not have side effects
+   - It does not "compute" anything
+   - It does not require recursive execution
+   - It's just is a relationship between states
+
+   Dynamic programming:
+   - Decomposes problems with recurrence relations 
+   - Recursive terms are values calculated once 
+   - Evaluates in a valid order of dependencies
+
+Consider this:
+   The US Secretary of Defense was scared of math, so Richard Bellman created a name to hide the math. I wasn't joking it really is all just one big conspiracy.
+
+---
 Bottom-up Dynamic programming: los valores de entrada van disminuyendo progresivamente.
 
 Un problema resolvible mediante dynamic programming debe tener dos propiedades:
 - Overlapping subproblems: soluciones al un mismo problema son necesarias múltiples veces. Común con Divide and Conquer.
 - Optimal Substructure: 
+
+"Recursive terms are values, not tasks."
+
+Recurrence Relation 
+```mermaid
+flowchart TD
+    F6 --> F4
+    F6 --> F5
+    F4 --> F3
+    F4 --> F2
+    F5 --> F3
+    F5 --> F4
+    F3 --> F1
+    F3 --> F2
+```
+
+Recursive Execution
+```mermaid
+graph TD
+   F6 --> F6_4["F4"]
+   F6 --> F6_5["F5"]
+   F6_4 --> F6_4_3["F3"]
+   F6_4 --> F4_2["F2"]
+   F6_4_3 --> F6_4_3_1["F1"]
+   F6_4_3 --> F6_4_3_2["F2"]
+   F6_5 --> F6_5_3["F3"]
+   F6_5 --> F6_5_4["F4"]
+   F6_5_3 --> F6_5_3_1["F1"]
+   F6_5_3 --> F6_5_3_2["F2"]
+   F6_5_4 --> F6_5_4_2["F2"]
+   F6_5_4 --> F6_5_4_3["F3"]
+   F6_5_4_3 --> F6_5_4_3_1["F1"]
+   F6_5_4_3 --> F6_5_4_3_2["F2"]
+```
 
 ## Cuantas soluciones monedas
 Cómo garantizar que no hay duplicados? Elegir solamente monedas superiores a la actual. 
